@@ -32,21 +32,24 @@ struct ContentView: View {
     }
     
    let tipPercentage = [5, 10, 15, 20, 25, 0]
-    
+    var currencyFormat:  FloatingPointFormatStyle<Double>.Currency  {
+        FloatingPointFormatStyle<Double>.Currency.currency(code: Locale.current.currencyCode ?? "USD")
+        
+    }
     
     var body: some View {
         NavigationView {
             
             Form{
                 Section{
-                    TextField("Enter the bill", value: $priceAmount, format: .currency(code: Locale.current.currencyCode ?? "USD"))
+                    TextField("Enter the bill", value: $priceAmount, format: currencyFormat)//.currency(code: Locale.current.currencyCode ?? "USD"))
                         .keyboardType(.numberPad).focused($priceFocused)
                 }header: {
                 Text("Enter the bill")
                 }
                 
                 Section {
-                        Text(totalByPerson, format: .currency(code: Locale.current.currencyCode ?? "USD"))
+                        Text(totalByPerson, format: currencyFormat) //.currency(code: Locale.current.currencyCode ?? "USD"))
                 }header: {
                 Text("Required amount by each person:")
                 }
@@ -59,16 +62,16 @@ struct ContentView: View {
                 Section{
                   //  Text("How much would you like to tip?")
                     Picker("Tip percentage", selection: $tipPercent){
-                        ForEach(tipPercentage, id: \.self){
-                            Text($0, format: .percent)
+                        ForEach(0..<101){
+                            Text("\($0,format: .percent)")
                         }
-                    }.pickerStyle(.segmented)
+                    }.pickerStyle(.navigationLink)
                 } header: {
                     Text("How much would you like to tip?")
                 }
                 
                 Section{
-                    Text(grandeTotal,  format: .currency(code: Locale.current.currencyCode ?? "USD"))
+                    Text(grandeTotal, format: currencyFormat)  //format: .currency(code: Locale.current.currencyCode ?? "USD"))
 
                 }header: {
                 Text("Grand Total")
@@ -99,7 +102,19 @@ struct ContentView: View {
         }
 
 }
-
+//Picker from array selection row
+/*
+Section{
+  //  Text("How much would you like to tip?")
+    Picker("Tip percentage", selection: $tipPercent){
+        ForEach(tipPercentage, id: \.self){
+            Text($0, format: .percent)
+        }
+    }.pickerStyle(.segmented)
+} header: {
+    Text("How much would you like to tip?")
+}
+*/
 
 //Create picker from array
 //let students = ["Harry", "Hermione", "Ron"]
