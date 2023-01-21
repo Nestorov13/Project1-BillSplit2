@@ -13,7 +13,7 @@ struct ContentView: View {
     @State private var tipPercent = 5
     @State private var numOfPeople = 1
     @FocusState private var priceFocused: Bool
-
+    
     var grandeTotal: Double{
         let tipSelection2 = Double(tipPercent)
         let tipValue2 = priceAmount / 100 * tipSelection2
@@ -71,14 +71,25 @@ struct ContentView: View {
                 }
                 
                 Section{
-                    Text(grandeTotal, format: currencyFormat)  //format: .currency(code: Locale.current.currencyCode ?? "USD"))
-
+                    if tipPercent == 0 {
+                        Text(grandeTotal, format: currencyFormat)
+                            .padding(8)
+                            .background(.red)
+                            .foregroundColor(.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 5))
+                    }
+                    else{
+                        Text(grandeTotal, format: currencyFormat)
+                            .padding(8)
+                            .background(.green)
+                            .foregroundColor(.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 5))
+                    }
+                        //format: .currency(code: Locale.current.currencyCode ?? "USD"))
+                        
                 }header: {
                 Text("Grand Total")
                 }
-                
-                
-                
                 
             }.navigationTitle("Dutchy Splitter")
                 .toolbar{
@@ -122,7 +133,7 @@ Section{
 /* NavigationView{
      Form {
          Picker("Select your Hero", selection: $selectedStudent){
-             ForEach(students, id: \.self){
+             ForEach(students, id: \.self){x
                  Text($0)
              }
          }
